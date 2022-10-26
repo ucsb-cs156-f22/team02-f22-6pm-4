@@ -54,7 +54,6 @@ public class ArticlesController extends ApiController{
             @ApiParam("date (in iso format, e.g. YYYY-mm-ddTHH:MM:SS; see https://en.wikipedia.org/wiki/ISO_8601)") @RequestParam("localDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateAdded)
             throws JsonProcessingException {
 
-        log.info("dateAdded={}", dateAdded);
         Article art = Article.builder()
                 .title(title)
                 .url(url)
@@ -94,6 +93,8 @@ public class ArticlesController extends ApiController{
         article1.setTitle(article.getTitle());
         article1.setUrl(article.getUrl());
         article1.setEmail(article.getEmail());
+
+        articleRepository.save(article1);
         return article1;
     }
 }
