@@ -101,7 +101,6 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
         menuItem.setStation(incoming.getStation());
 
         ucsbDiningCommonsMenuItemRepository.save(menuItem);
-
         return menuItem;
     }
 
