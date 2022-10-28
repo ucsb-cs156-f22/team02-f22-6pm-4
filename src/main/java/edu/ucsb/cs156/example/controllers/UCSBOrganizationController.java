@@ -33,7 +33,7 @@ public class UCSBOrganizationController extends ApiController{
     @ApiOperation(value = "List all ucsb organizations")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
-    public Iterable<UCSBOrganization> allUCSBDates() {
+    public Iterable<UCSBOrganization> allUCSBOrganization() {
         Iterable<UCSBOrganization> organization = ucsbOrganizationRepository.findAll();
         return organization;
     }
