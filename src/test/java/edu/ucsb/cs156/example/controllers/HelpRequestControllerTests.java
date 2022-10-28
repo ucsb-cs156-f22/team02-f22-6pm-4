@@ -63,7 +63,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                                 .andExpect(status().is(403)); // logged out users can't get by id
         }
 
-        // Authorization tests for /api/ucsbdates/post
+        // Authorization tests for /api/helprequest/post
         // (Perhaps should also have these for put and delete)
 
         @Test
@@ -100,7 +100,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                 when(helpRequestRepository.findById(eq(7L))).thenReturn(Optional.of(helpRequest));
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/helprequest?id=0"))
+                MvcResult response = mockMvc.perform(get("/api/helprequest?id=7"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -195,7 +195,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/ucsbdates/post?requesterEmail=irenecho@ucsb.edu&teamId=6pm-4&tableOrBreakoutRoom=10&requestTime=2022-01-03T00:00:00&explanation=team02&solved=false")
+                                post("/api/helprequest/post?requesterEmail=irenecho@ucsb.edu&teamId=6pm-4&tableOrBreakoutRoom=10&requestTime=2022-01-03T00:00:00&explanation=team02&solved=false")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -235,7 +235,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                 verify(helpRequestRepository, times(1)).delete(any());
 
                 Map<String, Object> json = responseToJson(response);
-                assertEquals("HelpRequest with id 15 deleted", json.get("message"));
+                assertEquals("Help request with id 15 deleted", json.get("message"));
         }
 
         @WithMockUser(roles = { "ADMIN", "USER" })
