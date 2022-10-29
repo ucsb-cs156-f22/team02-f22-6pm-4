@@ -198,7 +198,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
 
             //act
             MvcResult response = mockMvc.perform(
-                delete("/api/ucsbdiningcommonsmenuitem?id=8")
+                delete("/api/UCSBDiningCommonsMenuItem?id=8")
                 .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
             
