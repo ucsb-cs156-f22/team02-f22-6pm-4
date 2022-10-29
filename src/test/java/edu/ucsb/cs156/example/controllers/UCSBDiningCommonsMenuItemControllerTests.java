@@ -92,15 +92,15 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
                     .build();
 
 
-            when(ucsbDiningCommonsMenuItemRepository.findById(eq(7L))).thenReturn(Optional.of(menuItem));
+            when(ucsbDiningCommonsMenuItemRepository.findById(eq(1L))).thenReturn(Optional.of(menuItem));
 
             //act
-            MvcResult response = mockMvc.perform(get("api/ucsbdiningcommonsmenuitem?id=7"))
+            MvcResult response = mockMvc.perform(get("/api/ucsbdiningcommonsmenuitem?id=1"))
                 .andExpect(status().isOk()).andReturn();
             
             // assert
 
-            verify(ucsbDiningCommonsMenuItemRepository, times(1)).findById(eq(7L));
+            verify(ucsbDiningCommonsMenuItemRepository, times(1)).findById(eq(1L));
             String expectedJson = mapper.writeValueAsString(menuItem);
             String responseString = response.getResponse().getContentAsString();
             assertEquals(expectedJson, responseString);
@@ -112,17 +112,17 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
 
             //arrange
 
-            when(ucsbDiningCommonsMenuItemRepository.findById(eq(8L))).thenReturn(Optional.empty());
+            when(ucsbDiningCommonsMenuItemRepository.findById(eq(1L))).thenReturn(Optional.empty());
 
             //act
-            MvcResult response = mockMvc.perform(get("/api/ucsbdiningcommonsmenuitem?id=8"))
+            MvcResult response = mockMvc.perform(get("/api/ucsbdiningcommonsmenuitem?id=1"))
                 .andExpect(status().isNotFound()).andReturn();
 
             //assert
-            verify(ucsbDiningCommonsMenuItemRepository, times(1)).findById(eq(8L));
+            verify(ucsbDiningCommonsMenuItemRepository, times(1)).findById(eq(1L));
             Map<String, Object> json = responseToJson(response);
             assertEquals("EntityNotFoundException", json.get("type"));
-            assertEquals("UCSBDiningCommonsMenuItem with id 8 not found", json.get("message"));
+            assertEquals("UCSBDiningCommonsMenuItem with id 1 not found", json.get("message"));
         }
 
         @WithMockUser(roles = { "USER" })
@@ -159,13 +159,13 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
             assertEquals(expectedJson, responseString);
         }
 
-        @WithMockUser(roles = { "ADMIN", "USER" })
+        @WithMockUser(roles = { "ADMIN", "USER"})
         @Test
         public void an_admin_user_can_post_a_new_menuitem() throws Exception{
             //arrange
             UCSBDiningCommonsMenuItem menuItem = UCSBDiningCommonsMenuItem.builder()
-                        .diningCommonsCode("test")
-                        .name("test")
+                        .diningCommonsCode("test212")
+                        .name("test121")
                         .station("Entree")
                         .build();
             
@@ -173,7 +173,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
 
             //act
             MvcResult response = mockMvc
-                .perform(get("/api/ucsbdiningcommonsmenuitem/post?diningCommonsCode=test&name=test&station=Entree")
+                .perform(post("/api/ucsbdiningcommonsmenuitem/post?diningCommonsCode=test212&name=test121&station=Entree")
                 .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -182,7 +182,8 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
             String expectedJson = mapper.writeValueAsString(menuItem);
             String responseString = response.getResponse().getContentAsString();
             assertEquals(expectedJson, responseString);
-        }     
+        }
+        
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
@@ -198,7 +199,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
 
             //act
             MvcResult response = mockMvc.perform(
-                delete("/api/UCSBDiningCommonsMenuItem?id=8")
+                delete("/api/ucsbdiningcommonsmenuitem?id=8")
                 .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
             
@@ -212,21 +213,22 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
-        public void admin_tries_to_delete_non_existant_menuitem_and_gets_right_error_message() 
-                        throws Exception{
-            
-            when(ucsbDiningCommonsMenuItemRepository.findById(eq(8L))).thenReturn(Optional.empty());
+        public void admin_tries_to_delete_non_existant_menu_item_and_gets_right_error_message()
+        throws Exception {
+            // arrange
+
+            when(ucsbDiningCommonsMenuItemRepository.findById(eq(1L))).thenReturn(Optional.empty());
 
             // act
             MvcResult response = mockMvc.perform(
-                delete("/api/ucsbdiningcommonsmenuitem?id=8")
-                .with(csrf()))
-                .andExpect(status().isOk()).andReturn();
+                delete("/api/ucsbdiningcommonsmenuitem?id=1")
+                                .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
 
-            //assert
-            verify(ucsbDiningCommonsMenuItemRepository, times(1)).findById(8L);
+            // assert
+            verify(ucsbDiningCommonsMenuItemRepository, times(1)).findById(1L);
             Map<String, Object> json = responseToJson(response);
-            assertEquals("UCSBDiningCommonsMenuItem with id 8 not found", json.get("message"));
+            assertEquals("UCSBDiningCommonsMenuItem with id 1 not found", json.get("message"));
         }
 
         @WithMockUser(roles = { "ADMIN", "USER" })
@@ -291,7 +293,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
                 // assert
                 verify(ucsbDiningCommonsMenuItemRepository, times(1)).findById(8L);
                 Map<String, Object> json = responseToJson(response);
-                assertEquals("UCSBDiningCommons with id 8 not found", json.get("message"));
+                assertEquals("UCSBDiningCommonsMenuItem with id 8 not found", json.get("message"));
 
         }
 

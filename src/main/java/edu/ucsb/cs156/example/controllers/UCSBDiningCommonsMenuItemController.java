@@ -3,7 +3,6 @@ package edu.ucsb.cs156.example.controllers;
 import edu.ucsb.cs156.example.entities.UCSBDiningCommonsMenuItem;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.UCSBDiningCommonsMenuItemRepository;
-import edu.ucsb.cs156.example.repositories.UCSBDiningCommonsMenuItemRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,8 +30,8 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
     @Autowired
     UCSBDiningCommonsMenuItemRepository ucsbDiningCommonsMenuItemRepository;
     
-    @ApiOperation(value = "List all ucsb dinining commons menu items")
-    @PreAuthorize("hasROle('ROLE_USER')")
+    @ApiOperation(value = "List all ucsb dining commons menu items")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
     public Iterable<UCSBDiningCommonsMenuItem> allMenuItems(){
         Iterable<UCSBDiningCommonsMenuItem> menuItems = ucsbDiningCommonsMenuItemRepository.findAll();
@@ -53,8 +52,7 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
     @ApiOperation(value = "Create a new menu item")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
-    public UCSBDiningCommonsMenuItem postCommons(
-        @ApiParam("id") @RequestParam Long id,
+    public UCSBDiningCommonsMenuItem postCommonsMenuItem(
         @ApiParam("diningCommonsCode") @RequestParam String diningCommonsCode,
         @ApiParam("name") @RequestParam String name,
         @ApiParam("station") @RequestParam String station
@@ -62,7 +60,6 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
         {
 
         UCSBDiningCommonsMenuItem menuItem = new UCSBDiningCommonsMenuItem();
-        menuItem.setId(id);
         menuItem.setDiningCommonsCode(diningCommonsCode);
         menuItem.setName(name);
         menuItem.setStation(station);
@@ -75,7 +72,7 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
     @ApiOperation(value = "Delete a UCSBDiningCommonsMenuItem")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("")
-    public Object deleteCommons(
+    public Object deleteMenuItem(
         @ApiParam("id") @RequestParam Long id
     ){
 
@@ -88,8 +85,8 @@ public class UCSBDiningCommonsMenuItemController extends ApiController {
 
     @ApiOperation(value = "Update a single menu item")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("")
-    public Object updateMenuItems(
+    @PutMapping("")
+    public UCSBDiningCommonsMenuItem updateMenuItems(
         @ApiParam("id") @RequestParam Long id,
         @RequestBody @Valid UCSBDiningCommonsMenuItem incoming
     ){
