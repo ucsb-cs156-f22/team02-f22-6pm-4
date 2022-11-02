@@ -254,10 +254,10 @@ public class ArticlesControllerTests extends ControllerTestCase {
 
         Article article1 = Article.builder()
                 .dateAdded(ldt1)
-                .email("test")
-                .url("test")
-                .title("test")
-                .explanation("test")
+                .email("test1")
+                .url("test2")
+                .title("test2")
+                .explanation("test1")
                 .build();
 
         Article article2 = Article.builder()
@@ -318,6 +318,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
 
         // assert
         verify(articleRepository, times(1)).findById(67L);
+
         Map<String, Object> json = responseToJson(response);
         assertEquals("Article with id 67 not found", json.get("message"));
 
