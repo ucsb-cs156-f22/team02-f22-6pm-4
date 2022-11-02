@@ -170,14 +170,14 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                             .orgCode("ORG")
                             .orgTranslationShort("O")
                             .orgTranslation("ORGANIZATION")
-                            .inactive(false)
+                            .inactive(true)
                             .build();
 
             when(ucsbOrganizationRepository.save(eq(org))).thenReturn(org);
 
             // act
             MvcResult response = mockMvc.perform(
-                            post("/api/ucsborganization/post?orgCode=ORG&orgTranslationShort=O&orgTranslation=ORGANIZATION&inactive=false")
+                            post("/api/ucsborganization/post?orgCode=ORG&orgTranslationShort=O&orgTranslation=ORGANIZATION&inactive=true")
                                             .with(csrf()))
                             .andExpect(status().isOk()).andReturn();
 
@@ -240,26 +240,26 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
     public void admin_can_edit_an_existing_commons() throws Exception {
             // arrange
              
-            UCSBOrganization sc = UCSBOrganization.builder()
-                            .orgCode("SC")
-                            .orgTranslationShort("SOCCER CLUB")
-                            .orgTranslation("SOCCER CLUB AT UCSB")
+            UCSBOrganization t1 = UCSBOrganization.builder()
+                            .orgCode("t")
+                            .orgTranslationShort("test1")
+                            .orgTranslation("test111")
                             .inactive(false)
                             .build();
 
-            UCSBOrganization scEdited = UCSBOrganization.builder()
-                            .orgCode("SC")
-                            .orgTranslationShort("SOCCER CL")
-                            .orgTranslation("SOCCER CLUB AT UCSB")
+            UCSBOrganization t2 = UCSBOrganization.builder()
+                            .orgCode("t2")
+                            .orgTranslationShort("test2")
+                            .orgTranslation("test222")
                             .inactive(true)
                             .build();
-            String requestBody = mapper.writeValueAsString(scEdited);
+            String requestBody = mapper.writeValueAsString(t2);
 
-            when(ucsbOrganizationRepository.findById(eq("SC"))).thenReturn(Optional.of(sc));
+            when(ucsbOrganizationRepository.findById(eq("t"))).thenReturn(Optional.of(t1));
 
             // act
             MvcResult response = mockMvc.perform(
-                            put("/api/ucsborganization?orgCode=SC")
+                            put("/api/ucsborganization?orgCode=t")
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .characterEncoding("utf-8")
                                             .content(requestBody)
@@ -267,8 +267,8 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                             .andExpect(status().isOk()).andReturn();
 
             // assert
-            verify(ucsbOrganizationRepository, times(1)).findById("SC");
-            verify(ucsbOrganizationRepository, times(1)).save(scEdited); // should be saved with updated info
+            verify(ucsbOrganizationRepository, times(1)).findById("t");
+            verify(ucsbOrganizationRepository, times(1)).save(t2); // should be saved with updated info
             String responseString = response.getResponse().getContentAsString();
             assertEquals(requestBody, responseString);
     }
