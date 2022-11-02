@@ -155,7 +155,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                                 .tableOrBreakoutRoom("10")
                                 .requestTime(ldt2)
                                 .explanation("need help with jpa01")
-                                .solved(false)
+                                .solved(true)
                                 .build();
 
                 ArrayList<HelpRequest> expectedHelpRequests = new ArrayList<>();
@@ -188,14 +188,14 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                                 .tableOrBreakoutRoom("10")
                                 .requestTime(ldt1)
                                 .explanation("team02")
-                                .solved(false)
+                                .solved(true)
                                 .build();
 
                 when(helpRequestRepository.save(eq(helpRequest1))).thenReturn(helpRequest1);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/helprequest/post?requesterEmail=irenecho@ucsb.edu&teamId=6pm-4&tableOrBreakoutRoom=10&requestTime=2022-01-03T00:00:00&explanation=team02&solved=false")
+                                post("/api/helprequest/post?requesterEmail=irenecho@ucsb.edu&teamId=6pm-4&tableOrBreakoutRoom=10&requestTime=2022-01-03T00:00:00&explanation=team02&solved=true")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -269,19 +269,19 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                 HelpRequest helpRequestOrig = HelpRequest.builder()
                                 .requesterEmail("irenecho@ucsb.edu")
                                 .teamId("6pm-4")
-                                .tableOrBreakoutRoom("10")
+                                .tableOrBreakoutRoom("9")
                                 .requestTime(ldt1)
                                 .explanation("team02")
                                 .solved(false)
                                 .build();
 
                 HelpRequest helpRequestEdited = HelpRequest.builder()
-                                .requesterEmail("irenecho@ucsb.edu")
-                                .teamId("6pm-4")
+                                .requesterEmail("irenecho75@gmail.com")
+                                .teamId("6pm-3")
                                 .tableOrBreakoutRoom("10")
                                 .requestTime(ldt2)
                                 .explanation("jpa02")
-                                .solved(false)
+                                .solved(true)
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(helpRequestEdited);
