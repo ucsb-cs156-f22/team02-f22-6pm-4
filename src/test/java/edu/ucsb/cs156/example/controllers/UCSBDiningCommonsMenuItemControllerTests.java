@@ -244,7 +244,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
             UCSBDiningCommonsMenuItem menuItemTwo = UCSBDiningCommonsMenuItem.builder()
                             .diningCommonsCode("test2")
                             .name("test2")
-                            .station("Entree")
+                            .station("Entree2")
                             .build();
             
             String requestBody = mapper.writeValueAsString(menuItemTwo);
