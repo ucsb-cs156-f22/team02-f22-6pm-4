@@ -240,7 +240,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         assertEquals("MenuItemReview with id 123 not found", json.get("message"));
     }
 
-    /*@WithMockUser(roles = { "ADMIN", "USER" })
+    @WithMockUser(roles = { "ADMIN", "USER" })
     @Test
     public void admin_can_edit_an_existing_MenuItemReview() throws Exception {
         // arrange
@@ -265,7 +265,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
             .comments("not tryna get food poisoning, but if I were this would do it")
             .build();
 
-        String requestBody = mapper.writeValueAsString(dateReviewedEdited);
+        String requestBody = mapper.writeValueAsString(menuItemReviewEdited);
 
         when(menuItemReviewRepository.findById(eq(123L))).thenReturn(Optional.of(menuItemReviewOrig));
 
@@ -283,7 +283,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         verify(menuItemReviewRepository, times(1)).save(menuItemReviewEdited); // should be saved with correct user
         String responseString = response.getResponse().getContentAsString();
         assertEquals(requestBody, responseString);
-    }*/
+    }
 
     @WithMockUser(roles = { "ADMIN", "USER" })
     @Test
