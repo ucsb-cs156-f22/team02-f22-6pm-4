@@ -54,7 +54,7 @@ public class RecommendationController extends ApiController {
 
    @ApiOperation(value = "Create a new recommendation")
    @PreAuthorize("hasRole('ROLE_ADMIN')")
-   @GetMapping("/post")
+   @PostMapping("/post")
    public Recommendation postRecommendation(
 	   @ApiParam("requesterEmail") @RequestParam String requesterEmail,
 	   @ApiParam("professorEmail") @RequestParam String professorEmail,

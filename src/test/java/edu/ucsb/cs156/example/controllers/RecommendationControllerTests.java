@@ -184,7 +184,7 @@ public class RecommendationControllerTests extends ControllerTestCase {
 		Recommendation recommendation = Recommendation.builder()
 			.requesterEmail("alu@ucsb.edu")
 			.professorEmail("phtcon@ucsb.edu")
-			.explanation("PhD CE Cal Tech")
+			.explanation("PhD")
 			.dateRequested(dateReq)
 			.dateNeeded(dateNeed)
 			.done(true)
@@ -194,7 +194,7 @@ public class RecommendationControllerTests extends ControllerTestCase {
 
 		// act
 		MvcResult response = mockMvc.perform(
-				post("/api/Recommendation/post?requesterEmail=alu@ucsb.edu&professorEmail=phtcon@ucsb.edu&explanation=PhD CE Cal Tech&dateRequested=2022-01-03T00:00:00&dateNeeded=2022-11-03T00:00:00&done=true")
+				post("/api/Recommendation/post?requesterEmail=alu@ucsb.edu&professorEmail=phtcon@ucsb.edu&explanation=PhD&dateRequested=2022-01-03T00:00:00&dateNeeded=2022-11-03T00:00:00&done=true")
 						.with(csrf()))
 				.andExpect(status().isOk()).andReturn();
 
